@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guided MITRE ATLAS scoping for Generative AI and Agentic AI red-team assessments.">
+  <meta name="color-scheme" content="light">
+  <title>CGI AI Red-Team Scope Builder</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#main-content" aria-label="CGI AI Assurance home">
+      <span class="brand-mark" aria-hidden="true">CGI</span>
+      <span>AI Assurance</span>
+    </a>
+    <div class="topbar-meta">
+      <span class="baseline-pill" data-atlas-version>ATLAS baseline</span>
+      <span class="privacy-pill">Browser-local assessment</span>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="wizard-heading">
+      <div>
+        <p class="eyebrow">CLIENT SCOPING WIZARD · DRAFT</p>
+        <h1 id="wizard-heading" tabindex="-1">Turn architecture facts into a traceable AI red-team scope.</h1>
+        <p class="hero-copy">Answer plain-language questions. The wizard filters MITRE ATLAS techniques, explains why they apply and prepares an evidence-led scope for expert review.</p>
+      </div>
+      <aside class="method-card" aria-label="Assessment method">
+        <span>Method</span>
+        <strong>Context → Scope → Techniques → Evidence → Approval</strong>
+        <small>Technique decisions remain subject to security and risk-owner review.</small>
+      </aside>
+    </section>
+
+    <section id="load-error" class="alert error-alert" hidden>
+      <strong>The pinned ATLAS catalogue could not be loaded.</strong>
+      <span id="load-error-detail"></span>
+    </section>
+
+    <form id="assessment-form" novalidate>
+      <div class="progress-shell" aria-label="Assessment progress">
+        <div class="progress-copy">
+          <span id="progress-text">Step 1 of 6</span>
+          <span>Drafts are saved only when you select “Save draft”.</span>
+        </div>
+        <div class="progress-track"><span id="progress-bar"></span></div>
+      </div>
+
+      <div class="wizard-layout">
+        <nav class="step-nav" aria-label="Assessment steps">
+          <button type="button" data-step-target="1"><span>1</span><em>Context</em></button>
+          <button type="button" data-step-target="2"><span>2</span><em>AI profile</em></button>
+          <button type="button" data-step-target="3"><span>3</span><em>Data</em></button>
+          <button type="button" data-step-target="4"><span>4</span><em>Agency</em></button>
+          <button type="button" data-step-target="5"><span>5</span><em>Exposure</em></button>
+          <button type="button" data-step-target="6"><span>6</span><em>Scope</em></button>
+        </nav>
+
+        <div class="panel-shell">
+          <section class="step-panel" data-step-panel="1" aria-labelledby="step-1-title">
+            <div class="panel-heading">
+              <span>01 · Business context</span>
+              <h2 id="step-1-title">What are we assessing?</h2>
+              <p>Record enough context to make technique decisions reviewable. Do not enter secrets or personal information.</p>
+            </div>
+            <ul id="step-1-errors" class="validation-errors" tabindex="-1" hidden></ul>
+            <div class="field-grid two-column">
+              <label>
+                <span>Assessment name <b>*</b></span>
+                <input name="assessmentName" autocomplete="off" placeholder="e.g. Customer service agent release 3" required>
+              </label>
+              <label>
+                <span>Client or organisation <b>*</b></span>
+                <input name="clientName" autocomplete="organization" placeholder="Organisation name" required>
+              </label>
+              <label>
+                <span>Business or risk owner <b>*</b></span>
+                <input name="businessOwner" autocomplete="off" placeholder="Role or accountable team" required>
+              </label>
+              <label>
+                <span>Assessment date</span>
+                <input name="assessmentDate" type="date">
+              </label>
+              <label class="span-two">
+                <span>Intended use case <b>*</b></span>
+                <textarea name="useCase" rows="3" placeholder="Describe users, decisions, operating environment and expected outcomes." required></textarea>
+              </label>
+              <label>
+                <span>Business criticality</span>
+                <select name="criticality">
+                  <option value="low">Low · limited business impact</option>
+                  <option value="moderate">Moderate · important internal service</option>
+                  <option value="high">High · material client or operational impact</option>
+                  <option value="critical">Critical · essential, safety or systemic impact</option>
+                </select>
+              </label>
+              <fieldset class="choice-group">
+                <legend>Industry context</legend>
+                <label><input type="checkbox" name="sectors" value="Public sector"><span>Public sector</span></label>
+                <label><input type="checkbox" name="sectors" value="Financial services"><span>Financial services</span></label>
+                <label><input type="checkbox" name="sectors" value="Critical infrastructure"><span>Critical infrastructure</span></label>
+                <label><input type="checkbox" name="sectors" value="Health"><span>Health</span></label>
+                <label><input type="checkbox" name="sectors" value="Other regulated"><span>Other regulated</span></label>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step-panel="2" aria-labelledby="step-2-title" hidden>
+            <div class="panel-heading">
+              <span>02 · AI profile</span>
+              <h2 id="step-2-title">Which AI capabilities and ownership model apply?</h2>
+              <p>ATLAS platform tags create the candidate set. Ownership and autonomy determine the security depth.</p>
+            </div>
+            <ul id="step-2-errors" class="validation-errors" tabindex="-1" hidden></ul>
+            <div class="field-grid two-column">
+              <fieldset class="choice-group card-choice span-two">
+                <legend>MITRE ATLAS platform filters <b>*</b></legend>
+                <label><input type="checkbox" name="platforms" value="Generative AI"><span><strong>Generative AI</strong><small>Content generation, assistants, RAG and model-powered applications.</small></span></label>
+                <label><input type="checkbox" name="platforms" value="Agentic AI"><span><strong>Agentic AI</strong><small>Planning, memory, tools, actions, orchestration or autonomous behaviour.</small></span></label>
+              </fieldset>
+              <label id="genai-scope-field">
+                <span>Generative AI ownership scope</span>
+                <select name="genAiScope">
+                  <option value="scope1">Scope 1 · Consumer application</option>
+                  <option value="scope2">Scope 2 · Enterprise application</option>
+                  <option value="scope3">Scope 3 · Pre-trained model integration</option>
+                  <option value="scope4">Scope 4 · Fine-tuned model</option>
+                  <option value="scope5">Scope 5 · Self-trained model</option>
+                </select>
+                <small>Based on AWS Generative AI Security Scoping Matrix.</small>
+              </label>
+              <label id="agent-scope-field">
+                <span>Agentic autonomy scope</span>
+                <select name="agentScope">
+                  <option value="scope1">Scope 1 · No agency / read-only</option>
+                  <option value="scope2">Scope 2 · Prescribed / approval required</option>
+                  <option value="scope3">Scope 3 · Supervised agency</option>
+                  <option value="scope4">Scope 4 · Full agency / self-initiating</option>
+                </select>
+                <small>Based on AWS Agentic AI Security Scoping Matrix.</small>
+              </label>
+              <fieldset class="choice-group span-two">
+                <legend>Input and output modalities</legend>
+                <label><input type="checkbox" name="modalities" value="Text"><span>Text</span></label>
+                <label><input type="checkbox" name="modalities" value="Image"><span>Image</span></label>
+                <label><input type="checkbox" name="modalities" value="Audio"><span>Audio</span></label>
+                <label><input type="checkbox" name="modalities" value="Video"><span>Video</span></label>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step-panel="3" aria-labelledby="step-3-title" hidden>
+            <div class="panel-heading">
+              <span>03 · Data and trust boundaries</span>
+              <h2 id="step-3-title">What information can influence the system?</h2>
+              <p>Select every capability present in production or planned for the assessed release.</p>
+            </div>
+            <div class="feature-grid">
+              <label class="feature-card"><input type="checkbox" name="usesRag"><span><strong>RAG or enterprise search</strong><small>Retrieval indexes, knowledge bases or grounding sources.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="untrustedContent"><span><strong>Untrusted external content</strong><small>Documents, email, web pages, messages, uploads or tool responses.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="sensitiveData"><span><strong>Sensitive or regulated data</strong><small>Personal, financial, health, classified or commercially sensitive information.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="persistentMemory"><span><strong>Persistent memory or chat history</strong><small>State retained across turns, sessions or users.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="multiTenant"><span><strong>Multiple tenants or user populations</strong><small>Shared infrastructure with logical access boundaries.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="trainsModels"><span><strong>Training or fine-tuning lifecycle</strong><small>Owned datasets, fine-tuning jobs or internally trained models.</small></span></label>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step-panel="4" aria-labelledby="step-4-title" hidden>
+            <div class="panel-heading">
+              <span>04 · Agency and action</span>
+              <h2 id="step-4-title">What can the AI system do?</h2>
+              <p>Capability—not product naming—drives the red-team scope.</p>
+            </div>
+            <div class="feature-grid">
+              <label class="feature-card"><input type="checkbox" name="usesTools"><span><strong>Tools, APIs, plugins or MCP</strong><small>Discovers or invokes functions and external services.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="writeActions"><span><strong>Write or consequential actions</strong><small>Changes systems, data, money, identity, access or business state.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="multiAgent"><span><strong>Multi-agent orchestration</strong><small>Agents communicate, delegate or share artefacts.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="rendersActiveContent"><span><strong>Rendered links or active content</strong><small>HTML, Markdown, citations, URLs, code or rich client components.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="codeExecution"><span><strong>Code execution or computer use</strong><small>Shells, notebooks, browsers, desktops or workflow runners.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="physicalEnvironment"><span><strong>Physical or edge interaction</strong><small>Sensors, devices, vehicles, industrial or safety systems.</small></span></label>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step-panel="5" aria-labelledby="step-5-title" hidden>
+            <div class="panel-heading">
+              <span>05 · Exposure and impact</span>
+              <h2 id="step-5-title">How can the system be reached and what could go wrong?</h2>
+              <p>These answers prioritise exposure, supply-chain, harm and denial-of-wallet test packs.</p>
+            </div>
+            <div class="feature-grid compact">
+              <label class="feature-card"><input type="checkbox" name="publicExposure"><span><strong>Public or partner-facing endpoint</strong><small>Internet, mobile, external API or third-party access.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="thirdPartyArtifacts"><span><strong>Third-party AI artefacts</strong><small>Models, datasets, packages, containers, tools or registries.</small></span></label>
+            </div>
+            <fieldset class="choice-group impact-group">
+              <legend>Material consequences</legend>
+              <label><input type="checkbox" name="impacts" value="Confidentiality"><span>Data disclosure</span></label>
+              <label><input type="checkbox" name="impacts" value="Integrity"><span>Data or decision integrity</span></label>
+              <label><input type="checkbox" name="impacts" value="Availability"><span>Service availability</span></label>
+              <label><input type="checkbox" name="impacts" value="Financial"><span>Financial or FinOps loss</span></label>
+              <label><input type="checkbox" name="impacts" value="Safety"><span>Safety impact</span></label>
+              <label><input type="checkbox" name="impacts" value="Legal"><span>Legal or regulatory impact</span></label>
+              <label><input type="checkbox" name="impacts" value="Human"><span>Individual or community harm</span></label>
+              <label><input type="checkbox" name="impacts" value="Reputation"><span>Reputational harm</span></label>
+            </fieldset>
+            <fieldset class="choice-group standards-group">
+              <legend>Assurance references requested by the client</legend>
+              <label><input type="checkbox" name="standards" value="NIST AI RMF"><span>NIST AI RMF</span></label>
+              <label><input type="checkbox" name="standards" value="OWASP GenAI"><span>OWASP GenAI</span></label>
+              <label><input type="checkbox" name="standards" value="ISO 42001"><span>ISO/IEC 42001</span></label>
+              <label><input type="checkbox" name="standards" value="Cloud provider"><span>Cloud-provider guidance</span></label>
+              <label><input type="checkbox" name="standards" value="Sector regulation"><span>Sector regulation</span></label>
+            </fieldset>
+          </section>
+
+          <section class="step-panel results-panel" data-step-panel="6" aria-labelledby="step-6-title" hidden>
+            <div class="panel-heading results-heading">
+              <div>
+                <span>06 · Derived scope</span>
+                <h2 id="step-6-title">Review the evidence-led technique scope.</h2>
+                <p>“Applicable” is generated from declared architecture signals. All remaining candidates require an explicit expert decision.</p>
+              </div>
+              <div class="review-state"><span>Review state</span><strong id="review-status" data-status="Draft">Draft</strong></div>
+            </div>
+
+            <section class="assessment-summary" aria-label="Assessment summary">
+              <div class="summary-identity">
+                <span id="summary-client">Client</span>
+                <strong id="summary-assessment-name">Assessment</strong>
+              </div>
+              <div><span>Generative AI scope</span><strong id="summary-genai-scope">Not classified</strong></div>
+              <div><span>Agentic scope</span><strong id="summary-agent-scope">Not classified</strong></div>
+            </section>
+
+            <section class="metric-grid" aria-label="Technique metrics">
+              <div><span>Candidate techniques</span><strong id="summary-candidate-count">0</strong></div>
+              <div class="positive"><span>Applicable</span><strong id="summary-applicable-count">0</strong></div>
+              <div class="warning"><span>Needs investigation</span><strong id="summary-investigate-count">0</strong></div>
+              <div><span>Derived test packs</span><strong id="summary-test-pack-count">0</strong></div>
+            </section>
+
+            <section class="technique-scope" aria-labelledby="technique-scope-heading">
+              <div class="section-heading">
+                <div>
+                  <span>TECHNIQUE REGISTER</span>
+                  <h3 id="technique-scope-heading">Applicability and rationale</h3>
+                </div>
+                <span id="result-count">0 techniques shown</span>
+              </div>
+              <div class="filter-bar">
+                <label class="search-field"><span class="sr-only">Search techniques</span><input id="technique-search" type="search" placeholder="Search ID, technique or tactic"></label>
+                <label><span class="sr-only">Filter by status</span><select id="status-filter">
+                  <option value="Applicable">Applicable</option>
+                  <option value="Needs investigation">Needs investigation</option>
+                  <option value="Not applicable">Not applicable</option>
+                  <option value="Deferred">Deferred</option>
+                  <option value="">All statuses</option>
+                </select></label>
+                <label><span class="sr-only">Filter by platform</span><select id="platform-filter">
+                  <option value="">Both platforms</option>
+                  <option value="Generative AI">Generative AI</option>
+                  <option value="Agentic AI">Agentic AI</option>
+                </select></label>
+              </div>
+              <div id="technique-results" class="technique-results"></div>
+            </section>
+
+            <section class="review-gate" aria-labelledby="review-gate-heading">
+              <div>
+                <span>EXPERT REVIEW GATE</span>
+                <h3 id="review-gate-heading">Convert the derived scope into an approved test plan.</h3>
+                <p>Resolve every “Needs investigation” item and record rationale for exclusions or deferrals before approval.</p>
+              </div>
+              <div class="review-form">
+                <label><span>Reviewer name</span><input name="reviewerName" autocomplete="name" placeholder="Security or risk reviewer"></label>
+                <label><span>Reviewer role</span><input name="reviewerRole" autocomplete="organization-title" placeholder="Role / accountable function"></label>
+                <label class="attestation"><input id="approval-attestation" type="checkbox"><span>I confirm that architecture, threat actors, exclusions and evidence requirements have been reviewed.</span></label>
+                <div class="review-actions">
+                  <button id="mark-ready" class="button secondary" type="button">Mark ready for review</button>
+                  <button id="record-approval" class="button primary" type="button">Record expert approval</button>
+                </div>
+                <small id="approved-detail">Expert approval has not been recorded.</small>
+                <small>This static pilot records a declaration in the browser; production use requires authenticated identity and central audit storage.</small>
+              </div>
+            </section>
+          </section>
+
+          <div class="wizard-actions">
+            <button id="previous-step" class="button text-button" type="button">← Back</button>
+            <div>
+              <button id="save-draft" class="button secondary" type="button">Save draft</button>
+              <button id="next-step" class="button primary" type="button">Continue →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <section class="export-strip" aria-label="Assessment actions">
+      <div>
+        <span>Portable outputs</span>
+        <strong>Retain the scope, rationale and source version with the engagement record.</strong>
+      </div>
+      <div class="export-actions">
+        <button id="export-json" class="button secondary" type="button">Export JSON</button>
+        <button id="export-csv" class="button secondary" type="button">Export CSV</button>
+        <button id="print-report" class="button secondary" type="button">Print / PDF</button>
+        <button id="reset-assessment" class="button danger" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="governance-note">
+      <div>
+        <span>PINNED SOURCE</span>
+        <strong><span id="catalogue-count">0</span> techniques filtered to Generative AI and Agentic AI</strong>
+      </div>
+      <p>The platform filter creates a candidate catalogue; it does not prove applicability, control effectiveness or compliance. Re-run the assessment when architecture, models, data, tools, autonomy or the adopted ATLAS release changes.</p>
+      <a id="catalogue-source" href="https://github.com/mitre-atlas/atlas-data/releases/tag/v2026.09" target="_blank" rel="noreferrer">View official MITRE ATLAS release ↗</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>CGI AI Red-Team Scope Builder · Draft pilot</span>
+    <span>Aligned to MITRE ATLAS, NIST AI RMF MAP and AWS AI security scoping guidance.</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
