@@ -1,21 +1,21 @@
 {
   "source": {
     "name": "ATLAS",
-    "version": "2026.09",
-    "modifiedDate": "2026-09-15",
-    "formatVersion": "6.0.0",
-    "sourceUrl": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.09/dist/v6/ATLAS-2026.09.yaml",
-    "releaseUrl": "https://github.com/mitre-atlas/atlas-data/releases/tag/v2026.09",
-    "generatedAt": "2026-11-03T23:14:10Z",
+    "version": "2026.10",
+    "modifiedDate": "2026-10-28",
+    "formatVersion": "6.1.0",
+    "sourceUrl": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.10/dist/v6/ATLAS-2026.10.yaml",
+    "releaseUrl": "https://github.com/mitre-atlas/atlas-data/releases/tag/v2026.10",
+    "generatedAt": "2026-11-11T12:27:33Z",
     "platformFilters": [
       "Generative AI",
       "Agentic AI"
     ]
   },
   "counts": {
-    "selectedTechniques": 139,
-    "generativeAi": 106,
-    "agenticAi": 139
+    "selectedTechniques": 149,
+    "generativeAi": 114,
+    "agenticAi": 148
   },
   "techniques": [
     {
@@ -103,10 +103,6 @@
         {
           "id": "AML.M0001",
           "name": "Limit Model Artifact Release"
-        },
-        {
-          "id": "AML.M0014",
-          "name": "Verify AI Artifacts"
         }
       ],
       "parentId": "AML.T0002",
@@ -138,8 +134,8 @@
     },
     {
       "id": "AML.T0005",
-      "name": "Create Proxy AI Model",
-      "summary": "Adversaries may obtain models to serve as proxies for the target model in use at the victim organization. Proxy models are used to simulate complete access to the target model in a fully offline manner.",
+      "name": "Replicate AI Model Behavior",
+      "summary": "Adversaries may replicate an AI model's behavior or selected capabilities by training or adapting another model to approximate the target's responses, decision regions, or other characteristics. The result may be a surrogate for attack development, a functional replica, or a student model incorporating selected target capabilities.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -149,12 +145,16 @@
         "Generative AI",
         "Agentic AI"
       ],
-      "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0001",
           "name": "AI Attack Adaptation"
+        },
+        {
+          "id": "AML.TA0003",
+          "name": "Resource Development"
         }
       ],
       "mitigations": [
@@ -177,6 +177,10 @@
         {
           "id": "AML.M0019",
           "name": "Control Access to AI Models and Data in Production"
+        },
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
         }
       ],
       "parentId": null,
@@ -184,8 +188,8 @@
     },
     {
       "id": "AML.T0005.000",
-      "name": "Train Proxy via Gathered AI Artifacts",
-      "summary": "Proxy models may be trained from AI artifacts (such as data, model architectures, and pre-trained models) that are representative of the target model gathered by the adversary. This can be used to develop attacks that require higher levels of access than the adversary has available or as a means to validate pre-existing attacks without interacting with the target model.",
+      "name": "Replicate Behavior from Gathered AI Artifacts",
+      "summary": "Adversaries may replicate AI model behavior by training or fine-tuning another model from gathered AI artifacts, such as representative datasets, published architectures, training objectives, documented hyperparameters, or pretrained components.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -196,11 +200,15 @@
         "Agentic AI"
       ],
       "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0001",
           "name": "AI Attack Adaptation"
+        },
+        {
+          "id": "AML.TA0003",
+          "name": "Resource Development"
         }
       ],
       "mitigations": [
@@ -218,8 +226,8 @@
     },
     {
       "id": "AML.T0005.001",
-      "name": "Train Proxy via Replication",
-      "summary": "Adversaries may replicate a private model. By repeatedly querying the victim's AI Model Inference API Access, the adversary can collect the target model's inferences into a dataset. The inferences are used as labels for training a separate model offline that will mimic the behavior and performance of the target model.",
+      "name": "Replicate Behavior from Model Outputs",
+      "summary": "Adversaries may replicate an AI model's behavior or selected capabilities by training or adapting another model using outputs or other sources of supervision obtained from the target. Supervisory material may include labels, scores, probabilities, generated responses, reasoning explanations, evaluations, reward or preference signals, and tool-use or agent interaction trajectories.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -229,12 +237,16 @@
         "Generative AI",
         "Agentic AI"
       ],
-      "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0001",
           "name": "AI Attack Adaptation"
+        },
+        {
+          "id": "AML.TA0003",
+          "name": "Resource Development"
         }
       ],
       "mitigations": [
@@ -248,7 +260,11 @@
         },
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
+        },
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
         }
       ],
       "parentId": "AML.T0005",
@@ -256,8 +272,8 @@
     },
     {
       "id": "AML.T0005.002",
-      "name": "Use Pre-Trained Model",
-      "summary": "Adversaries may use an off-the-shelf pre-trained model as a proxy for the victim model to aid in staging the attack.",
+      "name": "Adapt Existing Model to Replicate Behavior",
+      "summary": "Adversaries may select an existing AI model whose behavior resembles a target and adapt it to more closely reproduce the capabilities or responses of interest. They may fine-tune the model or adjust its prompts and inference settings to improve that similarity.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -268,11 +284,15 @@
         "Agentic AI"
       ],
       "maturity": "Feasible",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0001",
           "name": "AI Attack Adaptation"
+        },
+        {
+          "id": "AML.TA0003",
+          "name": "Resource Development"
         }
       ],
       "mitigations": [
@@ -480,8 +500,8 @@
     },
     {
       "id": "AML.T0010",
-      "name": "AI Supply Chain Compromise",
-      "summary": "Adversaries may gain initial access to a system by compromising the unique portions of the AI supply chain. This could include Hardware, Data and its annotations, parts of the AI Software stack, or the Model itself. In some instances the attacker will need secondary access to fully carry out an attack using compromised components of the supply chain.",
+      "name": "Supply Chain Compromise",
+      "summary": "Adversaries may manipulate products, components, or their development and delivery mechanisms before they reach downstream consumers to compromise data or systems. Manipulation may involve source code, dependencies, development tools, build environments, software updates, distribution channels, or hardware.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -492,7 +512,7 @@
         "Agentic AI"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0004",
@@ -505,16 +525,16 @@
           "name": "Verify AI Artifacts"
         },
         {
-          "id": "AML.M0020",
-          "name": "Generative AI Guardrails"
-        },
-        {
           "id": "AML.M0023",
-          "name": "AI Bill of Materials"
+          "name": "Maintain an AI Bill of Materials"
         },
         {
           "id": "AML.M0035",
           "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": null,
@@ -534,7 +554,7 @@
         "Agentic AI"
       ],
       "maturity": "Feasible",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0004",
@@ -542,14 +562,17 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
+        }
       ],
       "parentId": "AML.T0010",
       "url": "https://atlas.mitre.org/techniques/AML.T0010.000"
     },
     {
       "id": "AML.T0010.001",
-      "name": "AI Software",
+      "name": "Software",
       "summary": "Adversaries may target software packages that are commonly used in AI-enabled systems or are part of the AI DevOps lifecycle. This can include deep learning frameworks used to build AI models (e.g. PyTorch, TensorFlow, Jax), generative AI integration frameworks (e.g. LangChain, LangFlow), inference engines, and AI DevOps tools. They may also target the dependency chains of any of these software packages [[pytorch]...",
       "platforms": [
         "Generative AI",
@@ -561,7 +584,7 @@
         "Agentic AI"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0004",
@@ -570,16 +593,24 @@
       ],
       "mitigations": [
         {
-          "id": "AML.M0006",
-          "name": "Predictive AI Ensembles"
-        },
-        {
           "id": "AML.M0013",
           "name": "Code Signing"
         },
         {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        },
+        {
           "id": "AML.M0035",
           "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0010",
@@ -587,8 +618,8 @@
     },
     {
       "id": "AML.T0010.002",
-      "name": "Data",
-      "summary": "Data is a key vector of supply chain compromise for adversaries. Every AI project will require some form of data. Many rely on large open source datasets that are publicly available. An adversary could rely on compromising these sources of data. The malicious data could be a result of Poison Training Data or include traditional malware.",
+      "name": "Data Repository",
+      "summary": "Adversaries may abuse data repositories or other dataset distribution services to introduce compromised data into downstream AI workflows. They may replace or modify published datasets, manipulate versions or references that consumers resolve, or publish malicious datasets under identities or locations that consumers trust.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -599,7 +630,7 @@
         "Agentic AI"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0004",
@@ -620,12 +651,20 @@
           "name": "Verify AI Artifacts"
         },
         {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        },
+        {
           "id": "AML.M0025",
           "name": "Maintain AI Dataset Provenance"
         },
         {
           "id": "AML.M0035",
           "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0010",
@@ -633,8 +672,8 @@
     },
     {
       "id": "AML.T0010.003",
-      "name": "Model",
-      "summary": "AI-enabled systems often rely on open-source models in various ways. Most commonly, the victim organization may be using these models for fine-tuning. These models will be downloaded from an external source and then used as the base for the model as it is tuned on a smaller, private dataset. Loading models often requires executing some saved code in the form of a saved model file. These can be compromised with tra...",
+      "name": "Model Repository",
+      "summary": "Adversaries may abuse model repositories or other model distribution services to introduce compromised models into downstream AI systems. They may replace published artifacts, manipulate model versions or references that consumers resolve, or publish malicious models under identities or locations that consumers trust.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -645,7 +684,7 @@
         "Agentic AI"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0004",
@@ -658,10 +697,6 @@
           "name": "Control Access to AI Models and Data at Rest"
         },
         {
-          "id": "AML.M0006",
-          "name": "Predictive AI Ensembles"
-        },
-        {
           "id": "AML.M0008",
           "name": "Validate AI Model"
         },
@@ -670,12 +705,24 @@
           "name": "Code Signing"
         },
         {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
           "id": "AML.M0017",
           "name": "AI Model Distribution Methods"
         },
         {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        },
+        {
           "id": "AML.M0035",
           "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0010",
@@ -703,7 +750,18 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
+        }
       ],
       "parentId": "AML.T0010",
       "url": "https://atlas.mitre.org/techniques/AML.T0010.004"
@@ -728,8 +786,16 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        },
+        {
           "id": "AML.M0035",
           "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0010",
@@ -773,10 +839,6 @@
         {
           "id": "AML.M0018",
           "name": "User Training"
-        },
-        {
-          "id": "AML.M0023",
-          "name": "AI Bill of Materials"
         }
       ],
       "parentId": null,
@@ -824,10 +886,6 @@
         {
           "id": "AML.M0018",
           "name": "User Training"
-        },
-        {
-          "id": "AML.M0023",
-          "name": "AI Bill of Materials"
         }
       ],
       "parentId": "AML.T0011",
@@ -956,7 +1014,7 @@
     {
       "id": "AML.T0016.004",
       "name": "AI Agent Tools",
-      "summary": "Adversaries may search for and obtain tools extend the capabilities of an AI agent. These capabilities may allow an agent to interact with operating systems, browsers, networks, cloud services, data stores, software repositories, identity systems, or other external resources.",
+      "summary": "Adversaries may search for and obtain tools that extend the capabilities of an AI agent. These capabilities may allow an agent to interact with operating systems, browsers, networks, cloud services, data stores, software repositories, identity systems, or other external resources.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -1059,7 +1117,14 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0035",
+          "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
+        }
       ],
       "parentId": "AML.T0017",
       "url": "https://atlas.mitre.org/techniques/AML.T0017.001"
@@ -1181,6 +1246,14 @@
           "name": "Code Signing"
         },
         {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        },
+        {
           "id": "AML.M0025",
           "name": "Maintain AI Dataset Provenance"
         },
@@ -1231,6 +1304,10 @@
           "name": "Code Signing"
         },
         {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
           "id": "AML.M0035",
           "name": "AI Red Team"
         }
@@ -1267,6 +1344,10 @@
         {
           "id": "AML.M0013",
           "name": "Code Signing"
+        },
+        {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
         }
       ],
       "parentId": "AML.T0018",
@@ -1297,7 +1378,14 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        }
       ],
       "parentId": "AML.T0018",
       "url": "https://atlas.mitre.org/techniques/AML.T0018.003"
@@ -1341,8 +1429,12 @@
           "name": "Validate AI Model"
         },
         {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
           "id": "AML.M0023",
-          "name": "AI Bill of Materials"
+          "name": "Maintain an AI Bill of Materials"
         },
         {
           "id": "AML.M0025",
@@ -1359,7 +1451,7 @@
     {
       "id": "AML.T0024",
       "name": "Exfiltration via AI Inference API",
-      "summary": "Adversaries may exfiltrate private information via AI Model Inference API Access. AI Models have been shown leak private information about their training data (e.g. Infer Training Data Membership, Invert AI Model). The model itself may also be extracted (Extract AI Model) for the purposes of AI Intellectual Property Theft.",
+      "summary": "Adversaries may exfiltrate information from a victim-controlled AI model or service through responses returned by its inference API. Transferred information may include predictions, scores, embeddings, generated content (e.g. text or images), or other sensitive information disclosed in model responses. Responses may be received directly or relayed through an intermediary.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -1370,7 +1462,7 @@
         "Agentic AI"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0010",
@@ -1388,7 +1480,7 @@
         },
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0035",
@@ -1397,132 +1489,6 @@
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0024"
-    },
-    {
-      "id": "AML.T0024.000",
-      "name": "Infer Training Data Membership",
-      "summary": "Adversaries may infer the membership of a data sample or global characteristics of the data in its training set, which raises privacy concerns. Some strategies make use of a shadow model that could be obtained via Train Proxy via Replication, others use statistics of model prediction scores.",
-      "platforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "allPlatforms": [
-        "Predictive AI",
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "maturity": "Feasible",
-      "modifiedDate": "2026-05-27",
-      "tactics": [
-        {
-          "id": "AML.TA0010",
-          "name": "Exfiltration"
-        }
-      ],
-      "mitigations": [
-        {
-          "id": "AML.M0002",
-          "name": "Predictive AI Output Obfuscation"
-        },
-        {
-          "id": "AML.M0004",
-          "name": "Limit AI Service Query Volume and Rate"
-        },
-        {
-          "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
-        },
-        {
-          "id": "AML.M0035",
-          "name": "AI Red Team"
-        }
-      ],
-      "parentId": "AML.T0024",
-      "url": "https://atlas.mitre.org/techniques/AML.T0024.000"
-    },
-    {
-      "id": "AML.T0024.001",
-      "name": "Invert AI Model",
-      "summary": "AI models' training data could be reconstructed by exploiting the confidence scores that are available via an inference API. By querying the inference API strategically, adversaries can back out potentially private information embedded within the training data. This could lead to privacy violations if the attacker can reconstruct the data of sensitive features used in the algorithm.",
-      "platforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "allPlatforms": [
-        "Predictive AI",
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "maturity": "Feasible",
-      "modifiedDate": "2026-05-27",
-      "tactics": [
-        {
-          "id": "AML.TA0010",
-          "name": "Exfiltration"
-        }
-      ],
-      "mitigations": [
-        {
-          "id": "AML.M0002",
-          "name": "Predictive AI Output Obfuscation"
-        },
-        {
-          "id": "AML.M0004",
-          "name": "Limit AI Service Query Volume and Rate"
-        },
-        {
-          "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
-        },
-        {
-          "id": "AML.M0035",
-          "name": "AI Red Team"
-        }
-      ],
-      "parentId": "AML.T0024",
-      "url": "https://atlas.mitre.org/techniques/AML.T0024.001"
-    },
-    {
-      "id": "AML.T0024.002",
-      "name": "Extract AI Model",
-      "summary": "Adversaries may extract a functional copy of a private model. By repeatedly querying the victim's AI Model Inference API Access, the adversary can collect the target model's inferences into a dataset. The inferences are used as labels for training a separate model offline that will mimic the behavior and performance of the target model.",
-      "platforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "allPlatforms": [
-        "Predictive AI",
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
-      "tactics": [
-        {
-          "id": "AML.TA0010",
-          "name": "Exfiltration"
-        }
-      ],
-      "mitigations": [
-        {
-          "id": "AML.M0002",
-          "name": "Predictive AI Output Obfuscation"
-        },
-        {
-          "id": "AML.M0004",
-          "name": "Limit AI Service Query Volume and Rate"
-        },
-        {
-          "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
-        },
-        {
-          "id": "AML.M0035",
-          "name": "AI Red Team"
-        }
-      ],
-      "parentId": "AML.T0024",
-      "url": "https://atlas.mitre.org/techniques/AML.T0024.002"
     },
     {
       "id": "AML.T0029",
@@ -1752,7 +1718,7 @@
     {
       "id": "AML.T0035",
       "name": "AI Artifact Collection",
-      "summary": "Adversaries may collect AI artifacts for Exfiltration or for use in AI Attack Staging. AI artifacts include models and datasets as well as other telemetry data produced when interacting with a model.",
+      "summary": "Adversaries may collect AI artifacts for Exfiltration or for use in AI Attack Adaptation. AI artifacts include models and datasets as well as other telemetry data produced when interacting with a model.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -1819,7 +1785,7 @@
         },
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0039",
@@ -1872,8 +1838,8 @@
         "Generative AI",
         "Agentic AI"
       ],
-      "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0001",
@@ -1896,6 +1862,10 @@
         {
           "id": "AML.M0019",
           "name": "Control Access to AI Models and Data in Production"
+        },
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
         }
       ],
       "parentId": null,
@@ -1993,7 +1963,7 @@
       "mitigations": [
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         }
       ],
       "parentId": null,
@@ -2142,7 +2112,7 @@
     {
       "id": "AML.T0048.004",
       "name": "AI Intellectual Property Theft",
-      "summary": "Adversaries may exfiltrate AI artifacts to steal intellectual property and cause economic harm to the victim organization.",
+      "summary": "Adversaries may appropriate AI-related intellectual property in a manner that causes economic or competitive harm to the victim organization. Targeted material may include model architectures and weights, training data, or model behaviors and capabilities.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -2154,7 +2124,7 @@
         "Enterprise"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0011",
@@ -2200,6 +2170,10 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
           "id": "AML.M0019",
           "name": "Control Access to AI Models and Data in Production"
         },
@@ -2217,7 +2191,7 @@
         },
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0033",
@@ -2254,7 +2228,7 @@
       "mitigations": [
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0033",
@@ -2280,7 +2254,7 @@
         "Generative AI",
         "Agentic AI"
       ],
-      "maturity": "Demonstrated",
+      "maturity": "Realized",
       "modifiedDate": "2026-09-15",
       "tactics": [
         {
@@ -2291,7 +2265,7 @@
       "mitigations": [
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0033",
@@ -2326,7 +2300,7 @@
       "mitigations": [
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0033",
@@ -2351,7 +2325,7 @@
         "Agentic AI"
       ],
       "maturity": "Demonstrated",
-      "modifiedDate": "2026-07-31",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0005",
@@ -2381,19 +2355,19 @@
         },
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
         },
         {
           "id": "AML.M0028",
-          "name": "AI Agent Tools Permissions Configuration"
+          "name": "Enforce Access Controls for AI Agent Tools"
         },
         {
           "id": "AML.M0029",
@@ -2414,6 +2388,10 @@
         {
           "id": "AML.M0035",
           "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0038",
+          "name": "AI Agent Scope Drift Detection"
         }
       ],
       "parentId": null,
@@ -2445,88 +2423,6 @@
       ],
       "mitigations": [
         {
-          "id": "AML.M0020",
-          "name": "Generative AI Guardrails"
-        },
-        {
-          "id": "AML.M0021",
-          "name": "Generative AI Guidelines"
-        },
-        {
-          "id": "AML.M0022",
-          "name": "Generative AI Model Alignment"
-        },
-        {
-          "id": "AML.M0035",
-          "name": "AI Red Team"
-        }
-      ],
-      "parentId": null,
-      "url": "https://atlas.mitre.org/techniques/AML.T0054"
-    },
-    {
-      "id": "AML.T0056",
-      "name": "Extract LLM System Prompt",
-      "summary": "Adversaries may attempt to extract a large language model's (LLM) system prompt. Adversaries achieve this via prompt injection that induces the model to reveal its system prompt, or they may extract it from a configuration file.",
-      "platforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "allPlatforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "maturity": "Feasible",
-      "modifiedDate": "2026-05-27",
-      "tactics": [
-        {
-          "id": "AML.TA0010",
-          "name": "Exfiltration"
-        }
-      ],
-      "mitigations": [
-        {
-          "id": "AML.M0020",
-          "name": "Generative AI Guardrails"
-        },
-        {
-          "id": "AML.M0021",
-          "name": "Generative AI Guidelines"
-        },
-        {
-          "id": "AML.M0022",
-          "name": "Generative AI Model Alignment"
-        },
-        {
-          "id": "AML.M0035",
-          "name": "AI Red Team"
-        }
-      ],
-      "parentId": null,
-      "url": "https://atlas.mitre.org/techniques/AML.T0056"
-    },
-    {
-      "id": "AML.T0057",
-      "name": "LLM Data Leakage",
-      "summary": "Adversaries may craft prompts that induce the LLM to leak sensitive information. This can include private user data or proprietary information. The leaked information may come from proprietary training data, data sources the LLM is connected to, or information from other users of the LLM.",
-      "platforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "allPlatforms": [
-        "Generative AI",
-        "Agentic AI"
-      ],
-      "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
-      "tactics": [
-        {
-          "id": "AML.TA0010",
-          "name": "Exfiltration"
-        }
-      ],
-      "mitigations": [
-        {
           "id": "AML.M0008",
           "name": "Validate AI Model"
         },
@@ -2548,7 +2444,7 @@
         }
       ],
       "parentId": null,
-      "url": "https://atlas.mitre.org/techniques/AML.T0057"
+      "url": "https://atlas.mitre.org/techniques/AML.T0054"
     },
     {
       "id": "AML.T0059",
@@ -2613,7 +2509,7 @@
     {
       "id": "AML.T0061",
       "name": "LLM Prompt Self-Replication",
-      "summary": "An adversary may use a carefully crafted LLM Prompt Injection designed to cause the LLM to replicate the prompt as part of its output. This allows the prompt to propagate to other LLMs and persist on the system. The self-replicating prompt is typically paired with other malicious instructions (ex: LLM Jailbreak, LLM Data Leakage).",
+      "summary": "Adversaries may introduce a prompt designed to replicate itself in a large language model's (LLM) output. The reproduced instructions may appear in generated messages, documents, source-code, files, or other artifacts. The prompt may direct the AI system to copy the instructions themselves or reproduce enclosing content that contains them. The self-replication instructions may be paired with additional malicious o...",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -2623,7 +2519,7 @@
         "Agentic AI"
       ],
       "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0006",
@@ -2691,7 +2587,7 @@
     {
       "id": "AML.T0063",
       "name": "Discover AI Model Outputs",
-      "summary": "Adversaries may discover model outputs, such as class scores, whose presence is not required for the system to function and are not intended for use by the end user. Model outputs may be found in logs or may be included in API responses. Model outputs may enable the adversary to identify weaknesses in the model and develop attacks.",
+      "summary": "Adversaries may discover what information an AI model or service exposes through its outputs. They may investigate both the intended responses and additional model-generated information exposed through the surrounding application. Relevant outputs may include predictions, scores, rankings, representations, generated content, reasoning, explanations, or evaluation results.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -2701,8 +2597,8 @@
         "Generative AI",
         "Agentic AI"
       ],
-      "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0008",
@@ -2762,7 +2658,7 @@
     {
       "id": "AML.T0065",
       "name": "LLM Prompt Crafting",
-      "summary": "Adversaries may use their acquired knowledge of the target generative AI system to craft prompts that bypass its defenses and allow malicious instructions to be executed.",
+      "summary": "Adversaries may use their acquired knowledge of the target generative AI system to craft prompts that bypass its defenses and allow malicious instructions to be executed. They may iterate on prompts to ensure that they work as intended consistently.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -2772,7 +2668,7 @@
         "Agentic AI"
       ],
       "maturity": "Realized",
-      "modifiedDate": "2026-08-31",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0001",
@@ -2806,10 +2702,7 @@
         }
       ],
       "mitigations": [
-        {
-          "id": "AML.M0020",
-          "name": "Generative AI Guardrails"
-        }
+
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0066"
@@ -2835,7 +2728,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0067"
@@ -2861,7 +2757,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": "AML.T0067",
       "url": "https://atlas.mitre.org/techniques/AML.T0067.000"
@@ -3157,7 +3056,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0077"
@@ -3183,6 +3085,10 @@
         }
       ],
       "mitigations": [
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
         {
           "id": "AML.M0031",
           "name": "Memory Hardening"
@@ -3217,6 +3123,10 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
           "id": "AML.M0031",
           "name": "Memory Hardening"
         },
@@ -3249,6 +3159,10 @@
         }
       ],
       "mitigations": [
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
         {
           "id": "AML.M0035",
           "name": "AI Red Team"
@@ -3310,12 +3224,16 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
         }
       ],
       "parentId": null,
@@ -3484,7 +3402,7 @@
     {
       "id": "AML.T0085",
       "name": "Data from AI Services",
-      "summary": "Adversaries may use their access to a victim organization's AI-enabled services to collect proprietary or otherwise sensitive information. As organizations adopt generative AI in centralized services for accessing an organization's data, such as with chat agents which can access retrieval augmented generation (RAG) databases and other data sources via tools, they become increasingly valuable targets for adversaries.",
+      "summary": "Adversaries may use their access to victim AI-enabled services to collect proprietary or otherwise sensitive information available to the system. As organizations adopt generative and agentic AI in centralized services for accessing an organization's data they become increasingly valuable targets for adversaries.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -3494,7 +3412,7 @@
         "Agentic AI"
       ],
       "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0009",
@@ -3503,20 +3421,24 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0022",
+          "name": "Generative AI Model Alignment"
+        },
+        {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
         },
         {
           "id": "AML.M0028",
-          "name": "AI Agent Tools Permissions Configuration"
+          "name": "Enforce Access Controls for AI Agent Tools"
         },
         {
           "id": "AML.M0032",
@@ -3529,7 +3451,7 @@
     {
       "id": "AML.T0085.000",
       "name": "RAG Databases",
-      "summary": "Adversaries may prompt the AI service to retrieve data from a RAG database. This can include the majority of an organization's internal documents.",
+      "summary": "Adversaries may collect sensitive information from data sources that an AI service accesses to retrieve context for its responses. These sources may include document repositories, enterprise search indexes, vector stores, knowledge bases, or other collections used for retrieval-augmented generation (RAG). Retrieved information may expose internal documents, personal information, internal communications, or other r...",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -3539,7 +3461,7 @@
         "Agentic AI"
       ],
       "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0009",
@@ -3548,16 +3470,24 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0022",
+          "name": "Generative AI Model Alignment"
+        },
+        {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
+        },
+        {
+          "id": "AML.M0028",
+          "name": "Enforce Access Controls for AI Agent Tools"
         },
         {
           "id": "AML.M0032",
@@ -3570,7 +3500,7 @@
     {
       "id": "AML.T0085.001",
       "name": "AI Agent Tools",
-      "summary": "Adversaries may prompt the AI service to invoke various tools the agent has access to. Tools may retrieve data from different APIs or services in an organization.",
+      "summary": "Adversaries may collect sensitive information through tools available to an AI agent. These tools may provide access to local files, databases, email and messaging systems, business applications, cloud resources, or other services. The agent's tools may operate with credentials or permissions that allow access to information the adversary cannot obtain directly.",
       "platforms": [
         "Agentic AI"
       ],
@@ -3578,7 +3508,7 @@
         "Agentic AI"
       ],
       "maturity": "Demonstrated",
-      "modifiedDate": "2026-05-27",
+      "modifiedDate": "2026-10-28",
       "tactics": [
         {
           "id": "AML.TA0009",
@@ -3587,20 +3517,24 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0022",
+          "name": "Generative AI Model Alignment"
+        },
+        {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
         },
         {
           "id": "AML.M0028",
-          "name": "AI Agent Tools Permissions Configuration"
+          "name": "Enforce Access Controls for AI Agent Tools"
         },
         {
           "id": "AML.M0032",
@@ -3609,6 +3543,96 @@
       ],
       "parentId": "AML.T0085",
       "url": "https://atlas.mitre.org/techniques/AML.T0085.001"
+    },
+    {
+      "id": "AML.T0085.002",
+      "name": "Conversation Context and Memory",
+      "summary": "Adversaries may collect sensitive information from an AI service's current or stored interactions and memory. This may include user messages, model responses, conversation summaries, and retained user facts and preferences.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Demonstrated",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
+          "id": "AML.M0021",
+          "name": "Generative AI Guidelines"
+        },
+        {
+          "id": "AML.M0022",
+          "name": "Generative AI Model Alignment"
+        },
+        {
+          "id": "AML.M0035",
+          "name": "AI Red Team"
+        }
+      ],
+      "parentId": "AML.T0085",
+      "url": "https://atlas.mitre.org/techniques/AML.T0085.002"
+    },
+    {
+      "id": "AML.T0085.003",
+      "name": "System Instructions",
+      "summary": "Adversaries may collect non-public instructions used to configure the behavior of an AI model or agent. These may include system prompts or application-specific rules governing tasks, tool use, response formatting, and handling of sensitive information.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Feasible",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
+          "id": "AML.M0021",
+          "name": "Generative AI Guidelines"
+        },
+        {
+          "id": "AML.M0022",
+          "name": "Generative AI Model Alignment"
+        },
+        {
+          "id": "AML.M0035",
+          "name": "AI Red Team"
+        }
+      ],
+      "parentId": "AML.T0085",
+      "url": "https://atlas.mitre.org/techniques/AML.T0085.003"
     },
     {
       "id": "AML.T0086",
@@ -3630,20 +3654,24 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
         },
         {
           "id": "AML.M0028",
-          "name": "AI Agent Tools Permissions Configuration"
+          "name": "Enforce Access Controls for AI Agent Tools"
         },
         {
           "id": "AML.M0029",
@@ -3703,7 +3731,7 @@
         "Generative AI",
         "Agentic AI"
       ],
-      "maturity": "Demonstrated",
+      "maturity": "Realized",
       "modifiedDate": "2026-05-27",
       "tactics": [
         {
@@ -3745,7 +3773,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0094"
@@ -3886,19 +3917,19 @@
       "mitigations": [
         {
           "id": "AML.M0024",
-          "name": "AI Telemetry Logging"
+          "name": "AI Telemetry Logging and Monitoring"
         },
         {
           "id": "AML.M0026",
-          "name": "Privileged AI Agent Permissions Configuration"
+          "name": "Manage AI Agent Service Access"
         },
         {
           "id": "AML.M0027",
-          "name": "Single-User AI Agent Permissions Configuration"
+          "name": "Manage User-Delegated AI Agent Access"
         },
         {
           "id": "AML.M0028",
-          "name": "AI Agent Tools Permissions Configuration"
+          "name": "Enforce Access Controls for AI Agent Tools"
         },
         {
           "id": "AML.M0029",
@@ -3931,7 +3962,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0013",
+          "name": "Code Signing"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0103"
@@ -3958,6 +3992,10 @@
         {
           "id": "AML.M0020",
           "name": "Generative AI Guardrails"
+        },
+        {
+          "id": "AML.M0024",
+          "name": "AI Telemetry Logging and Monitoring"
         }
       ],
       "parentId": null,
@@ -3966,7 +4004,7 @@
     {
       "id": "AML.T0109",
       "name": "AI Supply Chain Rug Pull",
-      "summary": "Adversaries may publish legitimate AI components or software, gain user adoption, then push an update with a malicious variant, leading to AI Supply Chain Compromise. More scrutiny is often placed on a supply chain dependency when it is first being considered for inclusion in an AI system. Performing a rug pull may allow adversaries to bypass these defenses and be more likely to achieve Initial Access.",
+      "summary": "Adversaries may publish legitimate AI components or software, gain user adoption, then push an update with a malicious variant, leading to Supply Chain Compromise. More scrutiny is often placed on a supply chain dependency when it is first being considered for inclusion in an AI system. Performing a rug pull may allow adversaries to bypass these defenses and be more likely to achieve Initial Access.",
       "platforms": [
         "Generative AI",
         "Agentic AI"
@@ -3985,7 +4023,14 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0014",
+          "name": "Verify AI Artifacts"
+        },
+        {
+          "id": "AML.M0023",
+          "name": "Maintain an AI Bill of Materials"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0109"
@@ -4033,7 +4078,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": "AML.T0110",
       "url": "https://atlas.mitre.org/techniques/AML.T0110.000"
@@ -4081,7 +4129,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": "AML.T0110",
       "url": "https://atlas.mitre.org/techniques/AML.T0110.002"
@@ -4162,6 +4213,10 @@
         {
           "id": "AML.M0020",
           "name": "Generative AI Guardrails"
+        },
+        {
+          "id": "AML.M0024",
+          "name": "AI Telemetry Logging and Monitoring"
         }
       ],
       "parentId": "AML.T0112",
@@ -4224,12 +4279,12 @@
           "name": "Sanitize Training Data"
         },
         {
-          "id": "AML.M0008",
-          "name": "Validate AI Model"
-        },
-        {
           "id": "AML.M0016",
           "name": "Vulnerability Scanning"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": null,
@@ -4260,6 +4315,10 @@
         {
           "id": "AML.M0007",
           "name": "Sanitize Training Data"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0115",
@@ -4294,6 +4353,10 @@
         {
           "id": "AML.M0016",
           "name": "Vulnerability Scanning"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0115",
@@ -4321,6 +4384,10 @@
         {
           "id": "AML.M0016",
           "name": "Vulnerability Scanning"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": "AML.T0115",
@@ -4350,12 +4417,28 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0000",
+          "name": "Limit Public Release of Information"
+        },
+        {
+          "id": "AML.M0001",
+          "name": "Limit Model Artifact Release"
+        },
+        {
           "id": "AML.M0037",
           "name": "AI Agent Authority Expansion Controls"
         },
         {
           "id": "AML.M0038",
           "name": "AI Agent Scope Drift Detection"
+        },
+        {
+          "id": "AML.M0039",
+          "name": "AI Honeypots"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": null,
@@ -4391,6 +4474,14 @@
         {
           "id": "AML.M0038",
           "name": "AI Agent Scope Drift Detection"
+        },
+        {
+          "id": "AML.M0039",
+          "name": "AI Honeypots"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": null,
@@ -4416,7 +4507,30 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0026",
+          "name": "Manage AI Agent Service Access"
+        },
+        {
+          "id": "AML.M0027",
+          "name": "Manage User-Delegated AI Agent Access"
+        },
+        {
+          "id": "AML.M0028",
+          "name": "Enforce Access Controls for AI Agent Tools"
+        },
+        {
+          "id": "AML.M0032",
+          "name": "Segmentation of AI Agent Components"
+        },
+        {
+          "id": "AML.M0037",
+          "name": "AI Agent Authority Expansion Controls"
+        },
+        {
+          "id": "AML.M0038",
+          "name": "AI Agent Scope Drift Detection"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0118"
@@ -4441,7 +4555,30 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0026",
+          "name": "Manage AI Agent Service Access"
+        },
+        {
+          "id": "AML.M0027",
+          "name": "Manage User-Delegated AI Agent Access"
+        },
+        {
+          "id": "AML.M0028",
+          "name": "Enforce Access Controls for AI Agent Tools"
+        },
+        {
+          "id": "AML.M0032",
+          "name": "Segmentation of AI Agent Components"
+        },
+        {
+          "id": "AML.M0038",
+          "name": "AI Agent Scope Drift Detection"
+        },
+        {
+          "id": "AML.M0043",
+          "name": "AI Agent External Resource Lifecycle Management"
+        }
       ],
       "parentId": "AML.T0118",
       "url": "https://atlas.mitre.org/techniques/AML.T0118.000"
@@ -4466,7 +4603,26 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0026",
+          "name": "Manage AI Agent Service Access"
+        },
+        {
+          "id": "AML.M0027",
+          "name": "Manage User-Delegated AI Agent Access"
+        },
+        {
+          "id": "AML.M0028",
+          "name": "Enforce Access Controls for AI Agent Tools"
+        },
+        {
+          "id": "AML.M0032",
+          "name": "Segmentation of AI Agent Components"
+        },
+        {
+          "id": "AML.M0038",
+          "name": "AI Agent Scope Drift Detection"
+        }
       ],
       "parentId": "AML.T0118",
       "url": "https://atlas.mitre.org/techniques/AML.T0118.001"
@@ -4494,7 +4650,14 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0005",
+          "name": "Control Access to AI Models and Data at Rest"
+        },
+        {
+          "id": "AML.M0024",
+          "name": "AI Telemetry Logging and Monitoring"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0120"
@@ -4523,12 +4686,32 @@
       ],
       "mitigations": [
         {
+          "id": "AML.M0028",
+          "name": "Enforce Access Controls for AI Agent Tools"
+        },
+        {
+          "id": "AML.M0029",
+          "name": "Human In-the-Loop for AI Agent Actions"
+        },
+        {
+          "id": "AML.M0032",
+          "name": "Segmentation of AI Agent Components"
+        },
+        {
+          "id": "AML.M0036",
+          "name": "Limit AI Workload Resource Consumption"
+        },
+        {
           "id": "AML.M0037",
           "name": "AI Agent Authority Expansion Controls"
         },
         {
           "id": "AML.M0038",
           "name": "AI Agent Scope Drift Detection"
+        },
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
         }
       ],
       "parentId": null,
@@ -4555,7 +4738,14 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0129"
@@ -4581,7 +4771,10 @@
         }
       ],
       "mitigations": [
-
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        }
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0130"
@@ -4692,6 +4885,466 @@
       ],
       "parentId": null,
       "url": "https://atlas.mitre.org/techniques/AML.T0134"
+    },
+    {
+      "id": "AML.T0135",
+      "name": "Outputs from AI Models",
+      "summary": "Adversaries may gather, retain, and organize outputs from an AI model or service as material for subsequent adversarial operations. Systematic selection and aggregation of responses can produce datasets or observations useful for analyzing the target, reproducing its behavior, or developing further attacks.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
+        }
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0135"
+    },
+    {
+      "id": "AML.T0136",
+      "name": "Exfiltration via AI User Interface",
+      "summary": "Adversaries exfiltrate information through an AI system's user-facing outputs. Information may be disclosed in conversational responses, generated documents, previews, or other content presented through the application. The application may expose information available to a victim-controlled AI service or deliver information gathered from other victim systems.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0010",
+          "name": "Exfiltration"
+        }
+      ],
+      "mitigations": [
+
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0136"
+    },
+    {
+      "id": "AML.T0137",
+      "name": "Training Data Information from AI Models",
+      "summary": "Adversaries may obtain sensitive information about the data used to train or fine-tune an AI model by analyzing its outputs or behavior. This can expose private associations, personally identifiable information, or proprietary data, creating data privacy concerns and supporting subsequent adversarial operations.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Demonstrated",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
+        },
+        {
+          "id": "AML.M0041",
+          "name": "Privacy-Preserving AI Training and Inference"
+        }
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0137"
+    },
+    {
+      "id": "AML.T0137.000",
+      "name": "Infer Membership",
+      "summary": "Adversaries may infer whether a particular data sample was included in an AI model's training dataset. Samples may include records, text passages, images, or audio samples. Establishing membership may reveal sensitive associations, participation in a private dataset, or use of proprietary information.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Feasible",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0002",
+          "name": "Predictive AI Output Obfuscation"
+        },
+        {
+          "id": "AML.M0004",
+          "name": "Limit AI Service Query Volume and Rate"
+        },
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0024",
+          "name": "AI Telemetry Logging and Monitoring"
+        },
+        {
+          "id": "AML.M0035",
+          "name": "AI Red Team"
+        },
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
+        },
+        {
+          "id": "AML.M0041",
+          "name": "Privacy-Preserving AI Training and Inference"
+        }
+      ],
+      "parentId": "AML.T0137",
+      "url": "https://atlas.mitre.org/techniques/AML.T0137.000"
+    },
+    {
+      "id": "AML.T0137.001",
+      "name": "Infer Properties",
+      "summary": "Adversaries may infer sensitive global properties of the data used to train an AI model. Properties may include dataset provenance, population composition, relative class proportions, domain coverage, collection period, or the presence of a category or group.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Feasible",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
+        },
+        {
+          "id": "AML.M0041",
+          "name": "Privacy-Preserving AI Training and Inference"
+        }
+      ],
+      "parentId": "AML.T0137",
+      "url": "https://atlas.mitre.org/techniques/AML.T0137.001"
+    },
+    {
+      "id": "AML.T0137.003",
+      "name": "Extract Memorized Data",
+      "summary": "Adversaries may elicit and recover sensitive content memorized by a generative AI model during training or fine-tuning. Recovered material may include complete training examples or recognizable portions of text, source code, or images, potentially exposing personal information, private communications, or proprietary material. Recovery may take the form of verbatim reproduction or near-duplicate outputs that reveal...",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Demonstrated",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
+        },
+        {
+          "id": "AML.M0041",
+          "name": "Privacy-Preserving AI Training and Inference"
+        }
+      ],
+      "parentId": "AML.T0137",
+      "url": "https://atlas.mitre.org/techniques/AML.T0137.003"
+    },
+    {
+      "id": "AML.T0138",
+      "name": "Indicator Removal",
+      "summary": "Adversaries may delete, alter, or falsify records and artifacts to conceal their activity, impede investigation, or make unauthorized actions appear legitimate. Targeted artifacts may include logs, command histories, files, metadata, repository history, and published content. Changes may selectively remove suspicious evidence while preserving surrounding material to maintain the appearance of normal activity.",
+      "platforms": [
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Agentic AI",
+        "Enterprise"
+      ],
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0007",
+          "name": "Defense Evasion"
+        }
+      ],
+      "mitigations": [
+
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0138"
+    },
+    {
+      "id": "AML.T0139",
+      "name": "Compromise Accounts",
+      "summary": "Adversaries may compromise existing accounts with services that can support targeting or subsequent operations. These accounts may provide established identities, trusted relationships, access to resources, or funded wallets for AI services.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI",
+        "Enterprise"
+      ],
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0003",
+          "name": "Resource Development"
+        }
+      ],
+      "mitigations": [
+
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0139"
+    },
+    {
+      "id": "AML.T0140",
+      "name": "Centralized AI Service Request Routing",
+      "summary": "Adversaries may distribute coordinated AI service requests across multiple pathways to impede detection, conceal the coordinated nature of the requests, and evade AI provider enforcement. Distributing activity can limit the portion of an operation visible through any individual account or pathway, obscuring its aggregate scale and common objective.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI",
+        "Enterprise"
+      ],
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0007",
+          "name": "Defense Evasion"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0042",
+          "name": "Threat Intelligence Program"
+        }
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0140"
+    },
+    {
+      "id": "AML.T0141",
+      "name": "AI Service Request Metadata Sanitization",
+      "summary": "Adversaries may remove or replace identifying information in request metadata before submitting requests to an AI service to impede attribution and correlation of coordinated activity. Sanitization may be enforced automatically in clients, relays, aggregators, or centralized routing infrastructure.",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Realized",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0007",
+          "name": "Defense Evasion"
+        }
+      ],
+      "mitigations": [
+
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0141"
+    },
+    {
+      "id": "AML.T0143",
+      "name": "LLM Prompt Propagation",
+      "summary": "Adversaries may cause malicious instructions already introduced into an AI-enabled environment to be transferred onward to additional storage locations, agents, applications, or resources where they can influence subsequent AI activity. This extends the attack beyond its initial point of introduction and may allow adversaries to influence additional targets without directly delivering a malicious prompt payload to...",
+      "platforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Generative AI",
+        "Agentic AI"
+      ],
+      "maturity": "Demonstrated",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0015",
+          "name": "Lateral Movement"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0026",
+          "name": "Manage AI Agent Service Access"
+        },
+        {
+          "id": "AML.M0027",
+          "name": "Manage User-Delegated AI Agent Access"
+        },
+        {
+          "id": "AML.M0028",
+          "name": "Enforce Access Controls for AI Agent Tools"
+        },
+        {
+          "id": "AML.M0030",
+          "name": "Restrict AI Agent Tool Invocation on Untrusted Data"
+        },
+        {
+          "id": "AML.M0032",
+          "name": "Segmentation of AI Agent Components"
+        },
+        {
+          "id": "AML.M0033",
+          "name": "Input and Output Validation for AI Agent Components"
+        }
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0143"
+    },
+    {
+      "id": "AML.T0144",
+      "name": "Recover AI Model Internals",
+      "summary": "Adversaries may infer or recover non-public AI model internals through analysis of model behavior or exposed information. Targets may include architecture, layer dimensions, hyperparameters, decision-tree structure, projection matrices, or numerical parameters.",
+      "platforms": [
+        "Generative AI"
+      ],
+      "allPlatforms": [
+        "Predictive AI",
+        "Generative AI"
+      ],
+      "maturity": "Feasible",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0008",
+          "name": "Discovery"
+        },
+        {
+          "id": "AML.TA0009",
+          "name": "Collection"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0040",
+          "name": "Adaptive AI Response Degradation"
+        }
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0144"
+    },
+    {
+      "id": "AML.T0145",
+      "name": "Poison AI Agent Learning Environment",
+      "summary": "Adversaries may manipulate an environment in which an AI agent interacts so that observations, feedback, rewards, actions, or resulting interactions are incorporated into model training to cause persistent changes to the behavior of an AI system. This allows adversary's influence to persist beyond the original interaction and affect subsequent tasks.",
+      "platforms": [
+        "Agentic AI"
+      ],
+      "allPlatforms": [
+        "Agentic AI"
+      ],
+      "maturity": "Feasible",
+      "modifiedDate": "2026-10-28",
+      "tactics": [
+        {
+          "id": "AML.TA0006",
+          "name": "Persistence"
+        }
+      ],
+      "mitigations": [
+        {
+          "id": "AML.M0007",
+          "name": "Sanitize Training Data"
+        },
+        {
+          "id": "AML.M0008",
+          "name": "Validate AI Model"
+        },
+        {
+          "id": "AML.M0020",
+          "name": "Generative AI Guardrails"
+        },
+        {
+          "id": "AML.M0022",
+          "name": "Generative AI Model Alignment"
+        },
+        {
+          "id": "AML.M0025",
+          "name": "Maintain AI Dataset Provenance"
+        },
+        {
+          "id": "AML.M0035",
+          "name": "AI Red Team"
+        }
+      ],
+      "parentId": null,
+      "url": "https://atlas.mitre.org/techniques/AML.T0145"
     }
   ]
 }

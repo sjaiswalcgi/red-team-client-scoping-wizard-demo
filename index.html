@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Guided MITRE ATLAS scoping for Generative AI and Agentic AI red-team assessments.">
+  <meta name="description" content="Guided CGI domain and MITRE ATLAS scoping for a bounded Generative AI or Agentic AI red-team assessment.">
   <meta name="color-scheme" content="light">
   <title>CGI AI Red-Team Scope Builder</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
@@ -26,12 +26,12 @@
       <div>
         <p class="eyebrow">CLIENT SCOPING WIZARD · DRAFT</p>
         <h1 id="wizard-heading" tabindex="-1">Turn architecture facts into a traceable AI red-team scope.</h1>
-        <p class="hero-copy">Answer plain-language questions. The wizard filters MITRE ATLAS techniques, explains why they apply and prepares an evidence-led scope for expert review.</p>
+        <p class="hero-copy">Define one AI workflow, its environment and safe-test boundary. The wizard maps the CGI domain model to a pinned MITRE ATLAS candidate set and prepares a draft atomic-assessment scope for expert review.</p>
       </div>
       <aside class="method-card" aria-label="Assessment method">
         <span>Method</span>
-        <strong>Context → Scope → Techniques → Evidence → Approval</strong>
-        <small>Technique decisions remain subject to security and risk-owner review.</small>
+        <strong>Context → Boundary → Domains → Techniques → Draft review</strong>
+        <small>Decision support for mobilisation only. It does not authorise testing or prove control effectiveness.</small>
       </aside>
     </section>
 
@@ -43,7 +43,7 @@
     <form id="assessment-form" novalidate>
       <div class="progress-shell" aria-label="Assessment progress">
         <div class="progress-copy">
-          <span id="progress-text">Step 1 of 6</span>
+          <span id="progress-text">Step 1 of 7</span>
           <span>Drafts are saved only when you select “Save draft”.</span>
         </div>
         <div class="progress-track"><span id="progress-bar"></span></div>
@@ -52,11 +52,12 @@
       <div class="wizard-layout">
         <nav class="step-nav" aria-label="Assessment steps">
           <button type="button" data-step-target="1"><span>1</span><em>Context</em></button>
-          <button type="button" data-step-target="2"><span>2</span><em>AI profile</em></button>
-          <button type="button" data-step-target="3"><span>3</span><em>Data</em></button>
-          <button type="button" data-step-target="4"><span>4</span><em>Agency</em></button>
-          <button type="button" data-step-target="5"><span>5</span><em>Exposure</em></button>
-          <button type="button" data-step-target="6"><span>6</span><em>Scope</em></button>
+          <button type="button" data-step-target="2"><span>2</span><em>Environment</em></button>
+          <button type="button" data-step-target="3"><span>3</span><em>AI profile</em></button>
+          <button type="button" data-step-target="4"><span>4</span><em>Data</em></button>
+          <button type="button" data-step-target="5"><span>5</span><em>Agency</em></button>
+          <button type="button" data-step-target="6"><span>6</span><em>Controls</em></button>
+          <button type="button" data-step-target="7"><span>7</span><em>Scope</em></button>
         </nav>
 
         <div class="panel-shell">
@@ -85,6 +86,11 @@
                 <input name="assessmentDate" type="date">
               </label>
               <label class="span-two">
+                <span>Single application or workflow in scope <b>*</b></span>
+                <input name="targetName" autocomplete="off" placeholder="e.g. Internal policy RAG assistant — release 3" required>
+                <small>The atomic assessment covers one bounded AI application or workflow.</small>
+              </label>
+              <label class="span-two">
                 <span>Intended use case <b>*</b></span>
                 <textarea name="useCase" rows="3" placeholder="Describe users, decisions, operating environment and expected outcomes." required></textarea>
               </label>
@@ -110,11 +116,57 @@
 
           <section class="step-panel" data-step-panel="2" aria-labelledby="step-2-title" hidden>
             <div class="panel-heading">
-              <span>02 · AI profile</span>
-              <h2 id="step-2-title">Which AI capabilities and ownership model apply?</h2>
-              <p>ATLAS platform tags create the candidate set. Ownership and autonomy determine the security depth.</p>
+              <span>02 · Primary environment</span>
+              <h2 id="step-2-title">Where will the bounded assessment run?</h2>
+              <p>Describe the single primary environment without entering endpoints, credentials or other secrets.</p>
             </div>
             <ul id="step-2-errors" class="validation-errors" tabindex="-1" hidden></ul>
+            <div class="field-grid two-column">
+              <label>
+                <span>Environment name <b>*</b></span>
+                <input name="environmentName" autocomplete="off" placeholder="e.g. UAT AI workload" required>
+              </label>
+              <label>
+                <span>Environment type <b>*</b></span>
+                <select name="environmentType" required>
+                  <option value="non-production">Non-production</option>
+                  <option value="production">Production — explicit approval required</option>
+                  <option value="isolated-test">Dedicated isolated test environment</option>
+                </select>
+              </label>
+              <label>
+                <span>Cloud or hosting provider</span>
+                <select name="cloudProvider">
+                  <option value="AWS">AWS</option>
+                  <option value="Microsoft Azure">Microsoft Azure</option>
+                  <option value="Google Cloud">Google Cloud</option>
+                  <option value="Multi-cloud">Multi-cloud</option>
+                  <option value="On-premises or private cloud">On-premises or private cloud</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+              <label>
+                <span>Region or data location</span>
+                <input name="cloudRegion" autocomplete="off" placeholder="e.g. Australia region; no account identifiers">
+              </label>
+              <label class="span-two">
+                <span>Model and deployment description</span>
+                <textarea name="modelDetails" rows="3" placeholder="Model family/version, managed service or self-hosted pattern, application boundary and major integrations. Do not enter secrets."></textarea>
+              </label>
+              <div class="scope-boundary-note span-two">
+                <strong>Atomic boundary</strong>
+                <span>One application or workflow · one primary environment · fixed test budget · one targeted retest of agreed Critical or High findings.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step-panel="3" aria-labelledby="step-3-title" hidden>
+            <div class="panel-heading">
+              <span>03 · AI profile</span>
+              <h2 id="step-3-title">Which AI capabilities and ownership model apply?</h2>
+              <p>ATLAS platform tags create the candidate set. Ownership and autonomy determine the security depth.</p>
+            </div>
+            <ul id="step-3-errors" class="validation-errors" tabindex="-1" hidden></ul>
             <div class="field-grid two-column">
               <fieldset class="choice-group card-choice span-two">
                 <legend>MITRE ATLAS platform filters <b>*</b></legend>
@@ -152,10 +204,10 @@
             </div>
           </section>
 
-          <section class="step-panel" data-step-panel="3" aria-labelledby="step-3-title" hidden>
+          <section class="step-panel" data-step-panel="4" aria-labelledby="step-4-title" hidden>
             <div class="panel-heading">
-              <span>03 · Data and trust boundaries</span>
-              <h2 id="step-3-title">What information can influence the system?</h2>
+              <span>04 · Data and trust boundaries</span>
+              <h2 id="step-4-title">What information can influence the system?</h2>
               <p>Select every capability present in production or planned for the assessed release.</p>
             </div>
             <div class="feature-grid">
@@ -168,12 +220,13 @@
             </div>
           </section>
 
-          <section class="step-panel" data-step-panel="4" aria-labelledby="step-4-title" hidden>
+          <section class="step-panel" data-step-panel="5" aria-labelledby="step-5-title" hidden>
             <div class="panel-heading">
-              <span>04 · Agency and action</span>
-              <h2 id="step-4-title">What can the AI system do?</h2>
+              <span>05 · Agency, safety and action</span>
+              <h2 id="step-5-title">What can the AI system do, and how do people rely on it?</h2>
               <p>Capability—not product naming—drives the red-team scope.</p>
             </div>
+            <ul id="step-5-errors" class="validation-errors" tabindex="-1" hidden></ul>
             <div class="feature-grid">
               <label class="feature-card"><input type="checkbox" name="usesTools"><span><strong>Tools, APIs, plugins or MCP</strong><small>Discovers or invokes functions and external services.</small></span></label>
               <label class="feature-card"><input type="checkbox" name="writeActions"><span><strong>Write or consequential actions</strong><small>Changes systems, data, money, identity, access or business state.</small></span></label>
@@ -181,19 +234,105 @@
               <label class="feature-card"><input type="checkbox" name="rendersActiveContent"><span><strong>Rendered links or active content</strong><small>HTML, Markdown, citations, URLs, code or rich client components.</small></span></label>
               <label class="feature-card"><input type="checkbox" name="codeExecution"><span><strong>Code execution or computer use</strong><small>Shells, notebooks, browsers, desktops or workflow runners.</small></span></label>
               <label class="feature-card"><input type="checkbox" name="physicalEnvironment"><span><strong>Physical or edge interaction</strong><small>Sensors, devices, vehicles, industrial or safety systems.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="humanDecisionSupport"><span><strong>People rely on AI output</strong><small>Users review, copy, interpret or act on recommendations or generated content.</small></span></label>
+              <label class="feature-card"><input type="checkbox" name="humanApproval"><span><strong>Human approval gate</strong><small>A person must approve a consequential action or release decision.</small></span></label>
+            </div>
+            <fieldset class="choice-group safety-group">
+              <legend>A2 safety topics included in risk-prioritised testing</legend>
+              <label><input type="checkbox" name="safetyTopics" value="Harmful content"><span>Harmful content</span></label>
+              <label><input type="checkbox" name="safetyTopics" value="Bias"><span>Bias probing</span></label>
+              <label><input type="checkbox" name="safetyTopics" value="Deception"><span>Deception</span></label>
+              <label><input type="checkbox" name="safetyTopics" value="Groundedness"><span>Hallucination and groundedness</span></label>
+              <label><input type="checkbox" name="safetyTopics" value="Misinformation"><span>Misinformation</span></label>
+            </fieldset>
+            <div class="field-grid two-column safety-context">
+              <label>
+                <span>Affected users or cohorts</span>
+                <textarea name="affectedCohorts" rows="2" placeholder="Describe relevant user groups or decision recipients without personal information."></textarea>
+              </label>
+              <label>
+                <span>Required grounding or trusted sources</span>
+                <textarea name="groundingExpectation" rows="2" placeholder="Describe when answers must cite, abstain or defer to an authoritative source."></textarea>
+              </label>
             </div>
           </section>
 
-          <section class="step-panel" data-step-panel="5" aria-labelledby="step-5-title" hidden>
+          <section class="step-panel" data-step-panel="6" aria-labelledby="step-6-title" hidden>
             <div class="panel-heading">
-              <span>05 · Exposure and impact</span>
-              <h2 id="step-5-title">How can the system be reached and what could go wrong?</h2>
-              <p>These answers prioritise exposure, supply-chain, harm and denial-of-wallet test packs.</p>
+              <span>06 · Engagement controls and readiness</span>
+              <h2 id="step-6-title">What makes the assessment authorised, bounded and recoverable?</h2>
+              <p>Capture draft rules of engagement, budget boundaries and prerequisite readiness. Final authorisation remains outside this demo.</p>
             </div>
+            <ul id="step-6-errors" class="validation-errors" tabindex="-1" hidden></ul>
             <div class="feature-grid compact">
               <label class="feature-card"><input type="checkbox" name="publicExposure"><span><strong>Public or partner-facing endpoint</strong><small>Internet, mobile, external API or third-party access.</small></span></label>
               <label class="feature-card"><input type="checkbox" name="thirdPartyArtifacts"><span><strong>Third-party AI artefacts</strong><small>Models, datasets, packages, containers, tools or registries.</small></span></label>
             </div>
+            <div class="field-grid two-column engagement-grid">
+              <label>
+                <span>Rules of engagement status</span>
+                <select name="rulesOfEngagementStatus">
+                  <option value="not-started">Not started</option>
+                  <option value="draft">Draft</option>
+                  <option value="approved">Approved outside this wizard</option>
+                </select>
+              </label>
+              <label>
+                <span>Proposed test window</span>
+                <input name="testWindow" autocomplete="off" placeholder="e.g. Two agreed business-day windows">
+              </label>
+              <label class="span-two">
+                <span>Authorised target boundary</span>
+                <textarea name="authorisedTargets" rows="2" placeholder="Describe allowlisted application components, interfaces and test identities. Do not enter URLs, credentials or account numbers."></textarea>
+              </label>
+              <label>
+                <span>Prohibited methods or actions</span>
+                <textarea name="prohibitedMethods" rows="3" placeholder="e.g. No production mutation, denial of service, real personal data or third-party targeting."></textarea>
+              </label>
+              <label>
+                <span>Stop conditions</span>
+                <textarea name="stopConditions" rows="3" placeholder="e.g. unexpected production effect, spend threshold, data exposure, safety event or loss of telemetry."></textarea>
+              </label>
+              <label>
+                <span>Kill-switch owner or role</span>
+                <input name="killSwitchOwner" autocomplete="off" placeholder="Role or accountable team; no personal contact details">
+              </label>
+              <label>
+                <span>Escalation contact role</span>
+                <input name="escalationContact" autocomplete="off" placeholder="Role or on-call function">
+              </label>
+              <label>
+                <span>Maximum requests</span>
+                <input name="requestLimit" inputmode="numeric" placeholder="e.g. 5000">
+              </label>
+              <label>
+                <span>Maximum tokens</span>
+                <input name="tokenLimit" inputmode="numeric" placeholder="e.g. 1000000">
+              </label>
+              <label>
+                <span>Maximum campaign spend</span>
+                <input name="spendLimit" inputmode="decimal" placeholder="e.g. AUD 1000">
+              </label>
+              <label>
+                <span>Targeted retest window</span>
+                <input name="retestWindow" autocomplete="off" placeholder="e.g. Within 20 business days after remediation">
+              </label>
+            </div>
+            <fieldset class="readiness-checklist">
+              <legend>Atomic-assessment prerequisites confirmed</legend>
+              <p>Select only items evidenced or confirmed by the client. Unselected items will appear as mobilisation actions.</p>
+              <div class="feature-grid compact readiness-grid">
+                <label class="feature-card"><input type="checkbox" name="architectureDocsReady"><span><strong>Architecture documented</strong><small>Architecture and data-flow documentation is available.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="configAccessReady"><span><strong>Configuration access</strong><small>Model, prompt, RAG, memory and tool configurations are available.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="authorisationReady"><span><strong>Written authorisation</strong><small>Boundaries, contacts and stop conditions are documented.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="testIdentitiesReady"><span><strong>Test identities</strong><small>Least-privilege test users and workloads are available.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="safeTestDataReady"><span><strong>Safe test data</strong><small>Synthetic, masked or approved canary data is available.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="telemetryReady"><span><strong>Telemetry available</strong><small>Relevant logs, traces and security telemetry can be observed.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="rollbackReady"><span><strong>Recovery controls</strong><small>Reset, rollback and kill-switch procedures are defined.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="costLimitsReady"><span><strong>Cost controls</strong><small>Quotas and campaign cost limits are agreed.</small></span></label>
+                <label class="feature-card"><input type="checkbox" name="privacyApprovalReady"><span><strong>Privacy and residency</strong><small>Required legal, privacy and data-location approvals are confirmed.</small></span></label>
+              </div>
+            </fieldset>
             <fieldset class="choice-group impact-group">
               <legend>Material consequences</legend>
               <label><input type="checkbox" name="impacts" value="Confidentiality"><span>Data disclosure</span></label>
@@ -215,11 +354,11 @@
             </fieldset>
           </section>
 
-          <section class="step-panel results-panel" data-step-panel="6" aria-labelledby="step-6-title" hidden>
+          <section class="step-panel results-panel" data-step-panel="7" aria-labelledby="step-7-title" hidden>
             <div class="panel-heading results-heading">
               <div>
-                <span>06 · Derived scope</span>
-                <h2 id="step-6-title">Review the evidence-led technique scope.</h2>
+                <span>07 · Derived scope</span>
+                <h2 id="step-7-title">Review the domain and technique scope.</h2>
                 <p>“Applicable” is generated from declared architecture signals. All remaining candidates require an explicit expert decision.</p>
               </div>
               <div class="review-state"><span>Review state</span><strong id="review-status" data-status="Draft">Draft</strong></div>
@@ -230,15 +369,55 @@
                 <span id="summary-client">Client</span>
                 <strong id="summary-assessment-name">Assessment</strong>
               </div>
-              <div><span>Generative AI scope</span><strong id="summary-genai-scope">Not classified</strong></div>
-              <div><span>Agentic scope</span><strong id="summary-agent-scope">Not classified</strong></div>
+              <div><span>Derived system type</span><strong id="summary-system-type">Not classified</strong></div>
+              <div><span>Primary environment</span><strong id="summary-environment">Not entered</strong></div>
+              <div><span>Proposed planning band</span><strong id="summary-effort">Not calculated</strong></div>
             </section>
 
             <section class="metric-grid" aria-label="Technique metrics">
               <div><span>Candidate techniques</span><strong id="summary-candidate-count">0</strong></div>
-              <div class="positive"><span>Applicable</span><strong id="summary-applicable-count">0</strong></div>
-              <div class="warning"><span>Needs investigation</span><strong id="summary-investigate-count">0</strong></div>
+              <div class="positive"><span>Applicable domains</span><strong id="summary-domain-applicable">0</strong></div>
+              <div class="warning"><span>Domain decisions open</span><strong id="summary-domain-investigate">0</strong></div>
+              <div class="warning"><span>Prerequisites open</span><strong id="summary-prereq-gaps">0</strong></div>
               <div><span>Derived test packs</span><strong id="summary-test-pack-count">0</strong></div>
+            </section>
+
+            <section class="scope-pack-summary" aria-labelledby="scope-pack-heading">
+              <div class="section-heading">
+                <div>
+                  <span>ATOMIC ASSESSMENT · A + B</span>
+                  <h3 id="scope-pack-heading">Draft mobilisation boundary</h3>
+                </div>
+                <span>DECIDE input · not test authorisation</span>
+              </div>
+              <div id="scope-boundary-results" class="scope-boundary-results"></div>
+              <div class="scope-exclusion">
+                <strong>Outside this atomic scope</strong>
+                <span>Remediation implementation, regression-suite engineering, release gating, SIEM content and dashboards, continuous testing and managed monitoring.</span>
+              </div>
+            </section>
+
+            <section class="readiness-results" aria-labelledby="readiness-results-heading">
+              <div class="section-heading">
+                <div>
+                  <span>MOBILISATION READINESS</span>
+                  <h3 id="readiness-results-heading">Client prerequisite actions</h3>
+                </div>
+                <span id="readiness-result-count">0 of 9 confirmed</span>
+              </div>
+              <div id="prerequisite-results" class="prerequisite-results"></div>
+            </section>
+
+            <section class="domain-scope" aria-labelledby="domain-scope-heading">
+              <div class="section-heading">
+                <div>
+                  <span>CGI DOMAIN MODEL</span>
+                  <h3 id="domain-scope-heading">Domain applicability matrix</h3>
+                </div>
+                <span>16 source families → A1–D1 + X1–X2</span>
+              </div>
+              <p class="section-intro">Planning disposition is separate from campaign execution. Every campaign status remains “Not tested” until evidence is produced.</p>
+              <div id="domain-results" class="domain-results"></div>
             </section>
 
             <section class="technique-scope" aria-labelledby="technique-scope-heading">
@@ -271,18 +450,18 @@
               <div>
                 <span>EXPERT REVIEW GATE</span>
                 <h3 id="review-gate-heading">Convert the derived scope into an approved test plan.</h3>
-                <p>Resolve every “Needs investigation” item and record rationale for exclusions or deferrals before approval.</p>
+                <p>Resolve open domain and technique decisions, then record a draft review. Signed rules of engagement and test authorisation remain external.</p>
               </div>
               <div class="review-form">
                 <label><span>Reviewer name</span><input name="reviewerName" autocomplete="name" placeholder="Security or risk reviewer"></label>
                 <label><span>Reviewer role</span><input name="reviewerRole" autocomplete="organization-title" placeholder="Role / accountable function"></label>
-                <label class="attestation"><input id="approval-attestation" type="checkbox"><span>I confirm that architecture, threat actors, exclusions and evidence requirements have been reviewed.</span></label>
+                <label class="attestation"><input id="approval-attestation" type="checkbox"><span>I confirm this draft scope, its assumptions, exclusions and evidence needs have been reviewed. This declaration does not authorise testing.</span></label>
                 <div class="review-actions">
                   <button id="mark-ready" class="button secondary" type="button">Mark ready for review</button>
-                  <button id="record-approval" class="button primary" type="button">Record expert approval</button>
+                  <button id="record-approval" class="button primary" type="button">Record draft review</button>
                 </div>
-                <small id="approved-detail">Expert approval has not been recorded.</small>
-                <small>This static pilot records a declaration in the browser; production use requires authenticated identity and central audit storage.</small>
+                <small id="approved-detail">Draft review has not been recorded.</small>
+                <small>This static pilot stores a review declaration in the browser. It is not a signature, rules-of-engagement approval or production audit record.</small>
               </div>
             </section>
           </section>
@@ -305,7 +484,8 @@
       </div>
       <div class="export-actions">
         <button id="export-json" class="button secondary" type="button">Export JSON</button>
-        <button id="export-csv" class="button secondary" type="button">Export CSV</button>
+        <button id="export-domain-csv" class="button secondary" type="button">Export domain CSV</button>
+        <button id="export-csv" class="button secondary" type="button">Export technique CSV</button>
         <button id="print-report" class="button secondary" type="button">Print / PDF</button>
         <button id="reset-assessment" class="button danger" type="button">Reset</button>
       </div>
@@ -316,14 +496,14 @@
         <span>PINNED SOURCE</span>
         <strong><span id="catalogue-count">0</span> techniques filtered to Generative AI and Agentic AI</strong>
       </div>
-      <p>The platform filter creates a candidate catalogue; it does not prove applicability, control effectiveness or compliance. Re-run the assessment when architecture, models, data, tools, autonomy or the adopted ATLAS release changes.</p>
-      <a id="catalogue-source" href="https://github.com/mitre-atlas/atlas-data/releases/tag/v2026.09" target="_blank" rel="noreferrer">View official MITRE ATLAS release ↗</a>
+      <p>The platform filter creates a candidate catalogue. The CGI crosswalk and planning dispositions require expert validation and do not prove test execution, control effectiveness or compliance.</p>
+      <a id="catalogue-source" href="https://github.com/mitre-atlas/atlas-data/releases/tag/v2026.10" target="_blank" rel="noreferrer">View official MITRE ATLAS release ↗</a>
     </section>
   </main>
 
   <footer>
-    <span>CGI AI Red-Team Scope Builder · Draft pilot</span>
-    <span>Aligned to MITRE ATLAS, NIST AI RMF MAP and AWS AI security scoping guidance.</span>
+    <span>CGI AI Red-Team Scope Builder · Draft internal pilot · offering profile v2</span>
+    <span>Mobilisation decision support for a bounded Readiness + Campaign assessment.</span>
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
